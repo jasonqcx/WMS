@@ -207,7 +207,7 @@
 							$('#checkCode').val("");
 						}else{
 							// 页面跳转
-							window.location.href = "/mainPage";
+							window.location.href = "./mainPage";
 						}
 					},
 					error:function(data){
