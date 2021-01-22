@@ -2,11 +2,11 @@
 	pageEncoding="UTF-8"%>
 
 <script>
-	var search_type_repositoryAdmin = "none";
+	var search_type_repositoryAdmin = "searchAll";
 	var search_keyWord = "";
 	var selectID;
 
-	$(function() {
+	$(function () {
 		optionAction();
 		searchAction();
 		repositoryAdminListInit();

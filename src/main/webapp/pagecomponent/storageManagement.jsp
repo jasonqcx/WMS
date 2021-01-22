@@ -2,13 +2,13 @@
 	pageEncoding="UTF-8"%>
 
 <script>
-	var search_type_storage = "none";
+	var search_type_storage = "searchAll";
 	var search_keyWord = "";
 	var search_repository = "";
 	var select_goodsID;
 	var select_repositoryID;
 
-	$(function() {
+	$(function () {
 		optionAction();
 		searchAction();
 		storageListInit();

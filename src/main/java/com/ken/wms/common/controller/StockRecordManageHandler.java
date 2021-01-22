@@ -133,16 +133,76 @@ public class StockRecordManageHandler {
             }
 
             // 转到 Service 执行查询
-            Map<String, Object> queryResult = stockRecordManageService.selectStockRecord(repositoryID, startDateStr, endDateStr, searchType, offset, limit);
+            Map<String, Object> queryResult = stockRecordManageService.selectStockRecord(repositoryID, startDateStr, endDateStr, searchType,
+                    offset, limit);
             if (queryResult != null) {
                 rows = (List<StockRecordDTO>) queryResult.get("data");
                 total = (long) queryResult.get("total");
             }
-        } else
+        } else {
             responseContent.setResponseMsg("Request argument error");
+        }
 
-        if (rows == null)
+        if (rows == null) {
             rows = new ArrayList<>(0);
+        }
+
+        responseContent.setCustomerInfo("rows", rows);
+        responseContent.setResponseTotal(total);
+        return responseContent.generateResponse();
+    }
+
+    /**
+     * 查询出入库记录(session 获取仓库)
+     *
+     * @param searchType      查询类型（查询所有或仅查询入库记录或仅查询出库记录）
+     * @param endDateStr      查询的记录起始日期
+     * @param startDateStr    查询的记录结束日期
+     * @param limit           分页大小
+     * @param offset          分页偏移值
+     * @return 返回一个Map，其中：Key为rows的值代表所有记录数据，Key为total的值代表记录的总条数
+     */
+    @SuppressWarnings({"SingleStatementInBlock", "unchecked"})
+    @RequestMapping(value = "searchStockRecordWithSession", method = RequestMethod.GET)
+    public @ResponseBody
+    Map<String, Object> getStockRecordWithSession(@RequestParam("searchType") String searchType,
+                                                  @RequestParam("startDate") String startDateStr,
+                                                  @RequestParam("endDate") String endDateStr, @RequestParam("limit") int limit,
+                                                  @RequestParam("offset") int offset, HttpServletRequest request)
+            throws ParseException, StockRecordManageServiceException {
+        // 初始化 Response
+        Response responseContent = responseUtil.newResponseInstance();
+        List<StockRecordDTO> rows = null;
+        long total = 0;
+
+        HttpSession session = request.getSession();
+        Integer repositoryID = (Integer) session.getAttribute("repositoryBelong");
+
+        // 参数检查
+        String regex = "([0-9]{4})-([0-9]{2})-([0-9]{2})";
+        boolean startDateFormatCheck = (StringUtils.isEmpty(startDateStr) || startDateStr.matches(regex));
+        boolean endDateFormatCheck = (StringUtils.isEmpty(endDateStr) || endDateStr.matches(regex));
+        boolean repositoryIDCheck = repositoryID != null;
+
+        if (startDateFormatCheck && endDateFormatCheck && repositoryIDCheck) {
+            if (repositoryID <= 0) {
+                repositoryID = -1;
+            }
+
+            // 转到 Service 执行查询
+            Map<String, Object> queryResult = stockRecordManageService.selectStockRecord(repositoryID, startDateStr, endDateStr, searchType,
+                    offset, limit);
+            if (queryResult != null) {
+                rows = (List<StockRecordDTO>) queryResult.get("data");
+                total = (long) queryResult.get("total");
+            }
+        } else {
+            responseContent.setResponseMsg("Request argument error");
+        }
+
+        if (rows == null) {
+            rows = new ArrayList<>(0);
+        }
 
         responseContent.setCustomerInfo("rows", rows);
         responseContent.setResponseTotal(total);

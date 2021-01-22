@@ -89,6 +89,11 @@ pageEncoding="UTF-8"%>
                                         <a href="javascript:void(0)" id="" class="menu_item"
                                            name="pagecomponent/storageManagementCommon.jsp">库存查询</a>
                                     </li>
+                                    <li class="list-group-item">
+                                        <a href="javascript:void(0)" id=""
+                                           class="menu_item"
+                                           name="pagecomponent/stockRecordManagementCommon.html">出入库记录</a>
+                                    </li>
                                 </shiro:hasRole>
                                 <!--若为超级管理员-->
                                 <shiro:hasRole name="systemAdmin">
@@ -134,11 +139,11 @@ pageEncoding="UTF-8"%>
                                 <ul class="list-group">
                                     <li class="list-group-item">
                                         <a href="javascript:void(0)" id="" class="menu_item"
-                                           name="#">货物入库</a>
+                                           name="pagecomponent/stock-inManagement.jsp">货物入库</a>
                                     </li>
                                     <li class="list-group-item">
                                         <a href="javascript:void(0)" id="" class="menu_item"
-                                           name="#">货物出库</a>
+                                           name="pagecomponent/stock-outManagement.jsp">货物出库</a>
                                     </li>
                                 </ul>
                             </shiro:hasRole>
