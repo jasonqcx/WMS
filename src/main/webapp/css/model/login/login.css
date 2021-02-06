@@ -1,11 +1,26 @@
 body {
-	background: url(../../../media/images/backgroundPic.png);
-	background-size: 100%;
-	background-position: center;
+	background: url(../../../media/images/background2.jpg);
+	background-size: auto;
+	/*background-position: center;*/
+
 
 	margin-top:150px;
+	font-size: 40px !important;
 }
 
+.container{
+	width: 1300px !important;
+}
+
+input{
+	font-weight: bold !important;
+	font-size: 40px !important;
+	height: 45px !important;
+}
+
+#checkCodeImg{
+	height: 70px;
+}
 #checkCodeImg:hover{
 	cursor: pointer;
 }
